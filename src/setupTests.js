@@ -13,11 +13,19 @@ afterEach(() => {
 
 // Mock framer-motion to avoid animation-related test issues
 vi.mock('framer-motion', () => {
+  const MotionElement = ({ as, children, ...props }) => {
+    const domProps = { ...props };
+    ['initial', 'animate', 'exit', 'transition', 'whileHover', 'whileTap', 'layout']
+      .forEach((prop) => delete domProps[prop]);
+
+    return React.createElement(as, domProps, children);
+  };
+
   return {
     motion: {
-      div: ({ children, ...props }) => React.createElement('div', props, children),
-      button: ({ children, ...props }) => React.createElement('button', props, children),
-      p: ({ children, ...props }) => React.createElement('p', props, children)
+      div: (props) => React.createElement(MotionElement, { ...props, as: 'div' }),
+      button: (props) => React.createElement(MotionElement, { ...props, as: 'button' }),
+      p: (props) => React.createElement(MotionElement, { ...props, as: 'p' })
     },
     AnimatePresence: ({ children }) => children,
   };
