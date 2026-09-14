@@ -16,10 +16,10 @@ jobs:
     steps:
       # Checkout the repository
       - name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
     
       - name: Setup Node.js
-        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with:
           node-version: '22'
           cache: 'npm'
@@ -30,7 +30,7 @@ jobs:
 
       # Generate SBOM from the dependencies (scanning the workspace directory)
       - name: Generate SBOM
-        uses: anchore/sbom-action@7b36ad622f042cab6f59a75c2ac24ccb256e9b45
+        uses: anchore/sbom-action@3ad7283483fc7af8ff2b4ea19663c2d5ca935e26
         with:
           upload-artifact: false
           upload-release-assets: false
@@ -54,14 +54,14 @@ jobs:
       #     subject-path: "dist.tar.gz"
 
       # Complete an attestation of the SBOM and the build
-      - uses: actions/attest-sbom@4651f806c01d8637787e274ac3bdf724ef169f34
+      - uses: actions/attest-sbom@c604332985a26aa8cf1bdc465b92731239ec6b9e
         with:
           subject-path: 'dist.tar.gz'
           sbom-path: 'sbom.spdx.json'
 
       # Publish the SBOM (Zipped per https://github.com/actions/upload-artifact?tab=readme-ov-file#zip-archives)
       - name: Publish the SBOM
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: sbom
           path: sbom.spdx.json
@@ -74,7 +74,7 @@ jobs:
       #    path: dist.tar.gz
           
       - name: "Deploy to GitHub Pages"
-        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
         with:
           path: dist
 
@@ -98,4 +98,4 @@ jobs:
    steps:
      - name: Deploy to GitHub Pages
        id: deployment
-       uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # or specific "vX.X.X" version tag for this action
+       uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346
