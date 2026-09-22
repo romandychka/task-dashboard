@@ -15,7 +15,7 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "tailwindcss": "^4.3.3",
-    "web-vitals": "^6.2.1"
+    "web-vitals": "^6.2.2"
   },
   "overrides": {
     "@svgr/webpack": "^8.0.1",
